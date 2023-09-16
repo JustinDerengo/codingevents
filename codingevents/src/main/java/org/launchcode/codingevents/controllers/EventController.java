@@ -18,7 +18,7 @@ public class EventController {
 
     private static Map<String, String> events = new HashMap<String, String>();
     static {
-        events.put("Menteaship", "A fun meetup for connecting with mentors");
+        events.put("Mentearship", "A fun meetup for connecting with mentors");
         events.put("Code With Pride", "A fun meetup sponsored by LaunchCode");
         events.put("JavaScripty", "An imaginary meetup for Javascript develpers");
     }
