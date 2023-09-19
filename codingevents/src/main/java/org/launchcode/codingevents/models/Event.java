@@ -1,10 +1,10 @@
 package org.launchcode.codingevents.models;
 
-public class event {
+public class Event {
     private String name;
 
 
-    public event(String name) {
+    public Event(String name) {
         this.name = name;
     }
 

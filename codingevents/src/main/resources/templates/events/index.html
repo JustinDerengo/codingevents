@@ -9,21 +9,16 @@
 
 <p th:unless="${events} and ${events.size()}">No Events!</p>
 
-<table>
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Name</th>
-            <th>Description</th>
         </tr>
     </thead>
-    <tbody>
-        <tr th:each="entry : ${events}">
-            <th:block th:if="${entry.key != null}">
-                <td th:text="${entry.key}"></td>
-                <td th:text="${entry.value}"></td>
-            </th:block>
-        </tr>
-    </tbody>
+    <tr th:each="event : ${events}">
+        <td th:text="${event}"></td>
+    </tr>
+
 </table>
 
 </body>

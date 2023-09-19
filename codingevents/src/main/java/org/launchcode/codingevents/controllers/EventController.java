@@ -1,6 +1,7 @@
 package org.launchcode.codingevents.controllers;
 
-import jdk.jfr.Event;
+
+import org.launchcode.codingevents.models.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +40,7 @@ public class EventController {
 
     @PostMapping("create")
     public String createEvent(@RequestParam String eventName){
-        events.add(eventName);
+        events.add(new Event(eventName));
         return "redirect:/events";
     }
 }
