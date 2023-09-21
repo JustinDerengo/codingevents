@@ -1,0 +1,57 @@
+Subject: [PATCH] Errors with "Bad data"
+---
+Index: codingevents/src/main/java/org/launchcode/codingevents/controllers/EventController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/codingevents/src/main/java/org/launchcode/codingevents/controllers/EventController.java b/codingevents/src/main/java/org/launchcode/codingevents/controllers/EventController.java
+--- a/codingevents/src/main/java/org/launchcode/codingevents/controllers/EventController.java	(revision 5a798794398b8451e08e32407239295aaffe3e08)
++++ b/codingevents/src/main/java/org/launchcode/codingevents/controllers/EventController.java	(revision d65da682df05f3951db60b78d3937562790db4b8)
+@@ -37,6 +37,7 @@
+     public String processCreateEventForm(@ModelAttribute @Valid Event newEvent, Errors errors, Model model){
+         if(errors.hasErrors()) {
+             model.addAttribute("title", "Create Event");
++            model.addAttribute("errorMsg", "Bad data!");
+             return "events/create";
+         }
+         EventData.add(newEvent);
+Index: codingevents/src/main/java/org/launchcode/codingevents/models/Event.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/codingevents/src/main/java/org/launchcode/codingevents/models/Event.java b/codingevents/src/main/java/org/launchcode/codingevents/models/Event.java
+--- a/codingevents/src/main/java/org/launchcode/codingevents/models/Event.java	(revision 5a798794398b8451e08e32407239295aaffe3e08)
++++ b/codingevents/src/main/java/org/launchcode/codingevents/models/Event.java	(revision d65da682df05f3951db60b78d3937562790db4b8)
+@@ -10,11 +10,12 @@
+ 
+     private int id;
+     private static int nextID = 1;
+-    @NotBlank
++    @NotBlank(message = "Name is required.")
+     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters.")
+     private String name;
+     @Size(max = 500, message = "Description too long!")
+     private String description;
++    @NotBlank(message = "Email is required")
+     @Email(message = "Invalid email. Try Again.")
+     private String contactEmail;
+ 
+Index: codingevents/src/main/resources/templates/events/create.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/codingevents/src/main/resources/templates/events/create.html b/codingevents/src/main/resources/templates/events/create.html
+--- a/codingevents/src/main/resources/templates/events/create.html	(revision 5a798794398b8451e08e32407239295aaffe3e08)
++++ b/codingevents/src/main/resources/templates/events/create.html	(revision d65da682df05f3951db60b78d3937562790db4b8)
+@@ -7,6 +7,8 @@
+ 
+ <nav th:replace="fragments :: navigation"></nav>
+ 
++<p th:text="${errorMsg}" style="color:red;"></p>
++
+ <form method="post" action="/events/create">
+     <div class="form-group">
+         <label>Name
